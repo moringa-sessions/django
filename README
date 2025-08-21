@@ -1,0 +1,19 @@
+Django
+Why use Django/
+ - Scalability
+ - Rapid development
+ - Security
+
+Advantages
+- community support
+- documentation
+
+
+Prerequisites
+- python
+- virtual environment - pipenv
+
+
+
+Create a basic django project
+ - apps
