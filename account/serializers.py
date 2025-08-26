@@ -19,10 +19,10 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class TaskSerializer(serializers.ModelSerializer):
-    # category = CategorySerializer(read_only=True)
+    category = CategorySerializer(read_only=True)
     class Meta:
         model = Task
-        fields = ["title", "description", "status", "category", "user"]
+        fields = ["title", "description", "status","category_id" ,"category", "user"]
         read_only_fields = ["created_at"]
 
      

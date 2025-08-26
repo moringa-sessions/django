@@ -20,6 +20,9 @@ urlpatterns = [
     path("categories", category.list_categories),
 
     path("task", task.add_task),
+    path("tasks", task.list_tasks),
+    path("task/<int:id>", task.update_task),
+    path("task/<int:id>/delete", task.delete_task),
 
 
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
