@@ -40,7 +40,7 @@ def create_user(request):
         return Response({"success":"User saved!"}, status=201)
     
     else:
-        return Response(serializer.errors, 400)
+        return Response({"error":serializer.errors}, 400)
 
     
 

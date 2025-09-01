@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { UserContext } from '../context/UserContext';
 
 const Login = () => {
-  const [username, setusername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const {login_user} = useContext(UserContext)
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    console.log('Log', username, password);
+    login_user(email, password)
+    console.log('Log', email, password);
   };
 
   return (
@@ -24,11 +26,10 @@ const Login = () => {
               <form onSubmit={handleSubmit}>
                 <div className="mx-auto max-w-xs">
                   <input required
-                    type="username"
                     className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
-                    placeholder="username"
-                    value={username}
-                    onChange={(e) => setusername(e.target.value)}
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                   <input required
                     type="password"

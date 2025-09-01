@@ -1,4 +1,4 @@
-import React, {useState } from 'react';
+import React, {useContext, useState } from 'react';
 import { UserContext } from '../context/UserContext';
 import { toast } from 'react-toastify';
 
@@ -7,6 +7,8 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
+
+  const {register_user} = useContext(UserContext)
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -22,7 +24,9 @@ const Register = () => {
     else{
 
       console.log("Registering ", username, email, password);
-      setEmail('');setPassword('');setRepeatPassword('');setUsername('');
+      register_user(username, email ,password)
+
+      // setEmail(''); setPassword(''); setRepeatPassword(''); setUsername('');
     }
 
 

@@ -14,11 +14,12 @@ SECRET_KEY = 'django-insecure-+dmlnb6m2(o2hpj%q(0z&6(^@$389yjpj9q5w+yw-l)0f7dhzx
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 # redirect django to custom user model for authentication
 AUTH_USER_MODEL = 'account.User'
 
+CORS_ALLOWED_ORIGINS = [ "http://127.0.0.1:5174"]
 # Application definition
 
 INSTALLED_APPS = [
@@ -30,7 +31,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'account',
     'rest_framework',
-    "rest_framework_simplejwt"
+    "rest_framework_simplejwt",
+        "corsheaders",
+
 ]
 
 
@@ -50,6 +53,8 @@ REST_FRAMEWORK = {
 }
 
 MIDDLEWARE = [
+        "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

@@ -16,6 +16,8 @@ export const UserProvider = ({ children }) => {
 
 
 
+    
+
     // All functions to manage user data
 
     // ========= Function to register a user ==========
@@ -23,7 +25,7 @@ export const UserProvider = ({ children }) => {
     {
         toast.loading("Registering user...");
 
-        fetch(`${api_url}/users`, {
+        fetch(`${api_url}/create_user`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -33,6 +35,7 @@ export const UserProvider = ({ children }) => {
         )
         .then(response => response.json())
         .then(res => {
+            
             if(res.error){
                 toast.dismiss();
                 toast.error(res.error)
@@ -53,34 +56,40 @@ export const UserProvider = ({ children }) => {
     }
 
     // ======== Function to login a user ========
-    function login_user(username, password){
+    function login_user(email, password){
         toast.loading("Logging you in...");
 
-        fetch(`${api_url}/login`, {
+        fetch(`${api_url}/api/token/`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({username: username, password: password})
+                body: JSON.stringify({email, password})
             }
         )
         .then(response => response.json())
         .then(res => {
+            console.log('====================================');
+            console.log(res);
+            console.log('====================================');
             if(res.error){
                 toast.dismiss();
                 toast.error(res.error)
 
             }
-            else if(res.access_token){
+            else if(res.access){
                   toast.dismiss();
                   toast.success("Logged in successfully!");
 
                 //   save token to localstorage
-                localStorage.setItem("access_token", res.access_token);
-                setAuthToken(res.access_token)
+                localStorage.setItem("access_token", res.access);
+                setAuthToken(res.access)
                   
-                //   navigate to question page
-                    navigate("/students");
+                navigate("/");
+            }
+            else if(res.detail){
+                  toast.dismiss();
+                  toast.error(res.detail);
             }
             else{
                 toast.dismiss();
@@ -92,27 +101,13 @@ export const UserProvider = ({ children }) => {
 
     // ======= Function to logout a user ========
     function logout_user(){
-        fetch(`${api_url}/logout`, {
-            method: "DELETE",
-            headers: {
-                Authorization: `Bearer ${auth_token}`,
-            }
-        }
-        )   
-        .then(response => response.json())
-        .then(res => {
-            if(res.success){
-                toast.success(res.success);
-                localStorage.removeItem("access_token");
-                setAuthToken(null);
-                setCurrentUser(null);
-                navigate("/login");
-            }
-            else{
-                toast.error("An error occurred while logging out!")
-            }
-        })   
 
+        toast.success("Logout success");
+        localStorage.removeItem("access_token");
+        setAuthToken(null);
+        setCurrentUser(null);
+        navigate("/login");
+    
     }
 
    
@@ -129,14 +124,11 @@ export const UserProvider = ({ children }) => {
             } })
             .then(response => response.json())
             .then(res => {
+                console.log("res ", res);
                 
-                if(res.msg){
-                    toast.error( res.msg);
-                }
-                else{
-                    console.log("Current user responsexxx ", res);
+                
+                if(res.email){
                     setCurrentUser(res);
-                    
 
                 }
             })
@@ -144,16 +136,16 @@ export const UserProvider = ({ children }) => {
     }, [auth_token]);
 
 
-   const xxxx="test"
 
 
 
 
     const context_data={
-        xxxx,
+       register_user,
+
         auth_token,
         currentUser,
-        register_user,
+        
         login_user,
         logout_user,
     }
